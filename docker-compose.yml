@@ -1,0 +1,53 @@
+
+version: '3.8'
+services:
+    client:
+        build: ./client
+        container_name: flask_client
+        restart: always
+        command: "python app.py"
+        # expose:
+        #   - 5000
+        ports:
+            # AMQP protocol port
+            - '5000:5000'  
+        depends_on:
+          - rabbitmq
+          - server
+        networks:
+        - rabbitmq_python    
+
+    server:
+        build: ./server
+        container_name: flask_server
+        restart: always
+        command: "python server.py"
+        # expose:
+        #   - 5001
+        ports:
+            # AMQP protocol port
+            - '5001:5001'   
+        depends_on:
+          - rabbitmq
+        networks:
+        - rabbitmq_python
+
+    rabbitmq:
+        container_name: "rabbitmq"
+        image: rabbitmq:3.8-management-alpine
+        environment:
+            - RABBITMQ_DEFAULT_USER=root
+            - RABBITMQ_DEFAULT_PASS=root
+        ports:
+            # AMQP protocol port
+            - '5672:5672'
+            # HTTP management UI
+            - '15672:15672'
+        networks:
+            - rabbitmq_python
+        volumes:
+            - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+            - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+networks:
+    rabbitmq_python:
+        driver: bridge        
