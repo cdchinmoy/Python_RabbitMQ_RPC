@@ -6,10 +6,7 @@ services:
         container_name: flask_client
         restart: always
         command: "python app.py"
-        # expose:
-        #   - 5000
         ports:
-            # AMQP protocol port
             - '5000:5000'  
         depends_on:
           - rabbitmq
@@ -22,10 +19,7 @@ services:
         container_name: flask_server
         restart: always
         command: "python server.py"
-        # expose:
-        #   - 5001
         ports:
-            # AMQP protocol port
             - '5001:5001'   
         depends_on:
           - rabbitmq
