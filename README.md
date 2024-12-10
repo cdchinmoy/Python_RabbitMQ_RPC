@@ -60,9 +60,8 @@ Send a JSON payload:
 #### Response Example:
 ```json
 {
-  "success": true,
-  "message": "PDF creation initiated successfully.",
-  "pdf_url": "http://localhost:5000/pdfs/sample.pdf"
+  "message": "PDF Generated!",
+  "status": "Success"
 }
 ```
 
