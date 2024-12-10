@@ -12,7 +12,10 @@ services:
           - rabbitmq
           - server
         networks:
-        - rabbitmq_python    
+        - rabbitmq_python
+        volumes:
+        - ./client:/opt/app  # Mounts the client directory to /app inside the container
+        - ~/.docker-conf/client/logs:/app/logs  
 
     server:
         build: ./server
@@ -25,6 +28,9 @@ services:
           - rabbitmq
         networks:
         - rabbitmq_python
+        volumes:
+        - ./server:/opt/app  # Mounts the server directory to /app inside the container
+        - ~/.docker-conf/server/logs:/app/logs 
 
     rabbitmq:
         container_name: "rabbitmq"

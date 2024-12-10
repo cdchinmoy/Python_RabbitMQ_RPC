@@ -5,6 +5,7 @@ import json
 def create(userdata):
     try:
         userdata = json.loads(userdata)
+        print(userdata, flush=True)
         text = ""
         for key,value in userdata.items():
             text += 'My '+key+' is : '+value+ "\n"
@@ -14,6 +15,7 @@ def create(userdata):
         pdf.set_font("Arial", size=20)
         pdf.cell(200, 10, txt=text, ln=1, align="L")
         pdf.output("test.pdf")
-        return "PDF Created !"
+        
+        return True
     except Exception as e:
-        return "Error Creating PDF !"
+        return False
